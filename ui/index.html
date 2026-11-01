@@ -419,12 +419,13 @@
         </div>
       </section>
 
+      <p class="api-note">Your CSV is required before asking. The page calls the hosted API at <code>https://ola-data-agent.onrender.com</code>. For local UI testing, open it at <code>http://localhost:11101</code> and allow that origin in the API's CORS settings.</p>
     </main>
   </div>
 
   <script>
     (() => {
-      const apiBase = (window.location.protocol === "file:" ? "http://127.0.0.1:8000" : window.location.origin).replace(/\/+$/, "");
+      const apiBase = "https://ola-data-agent.onrender.com";
       const maxFileSize = 10 * 1024 * 1024;
       const fileInput = document.getElementById("fileInput");
       const dropzone = document.getElementById("dropzone");

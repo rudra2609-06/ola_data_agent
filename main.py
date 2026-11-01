@@ -11,7 +11,6 @@ from pathlib import Path
 
 scheduler = BackgroundScheduler()
 
-origins = ["https://vercel_app", "https://localhost:2998"]
 
 
 @asynccontextmanager
