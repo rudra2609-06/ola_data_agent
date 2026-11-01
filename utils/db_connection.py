@@ -10,6 +10,11 @@ DB_URL = os.getenv("POSTGRES_DB_URL")
 if not DB_URL:
     raise ValueError("Required DB URL")
 
+if DB_URL.startswith("postgres://"):
+    DB_URL = DB_URL.replace("postgres://", "postgresql+psycopg2://", 1)
+elif DB_URL.startswith("postgresql://"):
+    DB_URL = DB_URL.replace("postgresql://", "postgresql+psycopg2://", 1)
+
 engine = create_engine(url=DB_URL, echo=True)
 
 
