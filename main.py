@@ -10,7 +10,7 @@ from utils.cleanup import cleanup_expired_table
 from pathlib import Path
 
 scheduler = BackgroundScheduler()
-
+import os
 
 
 @asynccontextmanager
@@ -41,6 +41,9 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+origins = os.getenv("origins")
+origins = [o.strip() for o in origins.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -50,5 +53,3 @@ app.add_middleware(
 )
 
 app.include_router(router=sql_router)
-
-
