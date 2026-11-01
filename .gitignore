@@ -1,2 +1,86 @@
-.venv
+# Python bytecode and interpreter caches
+*__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Environment variables and credentials
 .env
+.env.*
+!.env.example
+!.env.*.example
+
+# Python packaging and build output
+build/
+dist/
+site/
+*.egg
+*.egg-info/
+pip-wheel-metadata/
+wheels/
+share/python-wheels/
+
+# Test, type-checker, and linter output
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.pyre/
+.pytype/
+.pyright/
+.ruff_cache/
+.tox/
+.nox/
+.hypothesis/
+.ipynb_checkpoints/
+
+# Dependency and tool caches
+.cache/
+.uv/
+uv-cache/
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+
+# Local databases and generated data
+*.sqlite
+*.sqlite3
+*.db
+
+# Node tooling, if used for UI development
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.next/
+.nuxt/
+
+# IDE and operating-system files
+.idea/
+.fleet/
+.project
+.pydevproject
+.settings/
+.DS_Store
+Thumbs.db
+Desktop.ini

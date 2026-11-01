@@ -2,6 +2,9 @@ import os
 
 import psycopg2
 
+from typing import Optional
+
+
 class DatabaseUtil:
 
     def __init__(self, db_config):
@@ -13,7 +16,7 @@ class DatabaseUtil:
             print(f"Error connecting to the database: {e}")
             self.connection = None
 
-    def collect_context(self, schema_name = "public") -> str:
+    def collect_context(self, schema_name="public", table_name=Optional[str]) -> str:
         """The aim of this method is to collect the context of the database connection, such as table names, column names, and data types. This information can be useful for understanding the structure of the database as context for further operations while working with sql analyst agent."""
         cursor = None
         try:
@@ -27,6 +30,9 @@ class DatabaseUtil:
                 (schema_name,),
             )
             tables_list = cursor.fetchall()
+
+            if table_name is not None:
+                tables_list = [table for table in tables_list if table[0].lower() == table_name ]
 
             for table in tables_list:
                 table_name = table[0]
@@ -61,13 +67,7 @@ class DatabaseUtil:
             print(f"Error while collecting context: {e}")
             raise
 
-        finally:
-            if cursor is not None:
-                cursor.close()
-            if self.connection is not None:
-                self.connection.close()
-
-    def execute_query(self,query) -> str:
+    def execute_query(self, query) -> str:
         """
         Helper fn that helps in executing sql queries
         and returns the results in string format
@@ -80,7 +80,7 @@ class DatabaseUtil:
             conn.commit()
             return str(res)
         except Exception as e:
-            print(f'Executing Generated SQL Query failed due to {e}')
+            print(f"Executing Generated SQL Query failed due to {e}")
             raise
         finally:
             if cursor:

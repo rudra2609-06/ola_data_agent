@@ -276,7 +276,7 @@ sql_agent_graph = StateGraph(AgentSchema)
 
 # Nodes
 sql_agent_graph.add_node("curate_prompt", curate_prompt)
-sql_agent_graph.add_node("generate_context", context_prompt_query)
+# sql_agent_graph.add_node("generate_context", context_prompt_query)
 sql_agent_graph.add_node("generate_sql_query", generate_sql_query)
 sql_agent_graph.add_node("sql_check_guard", sql_check_guard)
 sql_agent_graph.add_node("cancelled_sql", cancelled_sql)
@@ -286,8 +286,7 @@ sql_agent_graph.add_node("represent_final_answer", represent_final_answer)
 # Edges
 sql_agent_graph.add_edge(START, "curate_prompt")  # <- Denotes the start edge of graph
 
-sql_agent_graph.add_edge("curate_prompt", "generate_context")
-sql_agent_graph.add_edge("generate_context", "generate_sql_query")
+sql_agent_graph.add_edge("curate_prompt", "generate_sql_query")
 sql_agent_graph.add_edge("generate_sql_query", "sql_check_guard")
 
 

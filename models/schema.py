@@ -1,6 +1,10 @@
 from pydantic import BaseModel, Field
-from typing import Annotated, Literal,Optional
+from typing import Annotated, Literal, Optional
 from operator import add
+from uuid import UUID
+from sqlmodel import SQLModel, Field
+from sqlalchemy import DateTime
+from datetime import datetime, timedelta, timezone
 
 
 class AgentSchema(BaseModel):
@@ -47,4 +51,31 @@ class SQLJudgementSchema(BaseModel):
     comments: str = Field(
         ...,
         description="Additional comments or feedbacks from the judge regarding the sql query",
+    )
+
+
+class ContextTbl(SQLModel, table=True):
+    upload_id: UUID = Field(
+        description="The upload id of the table provided to the client",
+        primary_key=True,
+    )
+    table_name: str = Field(
+        description="The name of the table to provide context for the user's query.",
+    )
+    context: str = Field(description="The Context for particular table")
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    expires_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc) + timedelta(hours=8),
+        sa_type=DateTime(timezone=True),
+        index=True,
+    )
+
+
+class AskRequest(BaseModel):
+    upload_id: str = Field(..., description="ID returned by /upload")
+    question: str = Field(
+        ...,
+        min_length=1,
+        max_length=1000,
+        description="Question about the uploaded data",
     )
