@@ -1,6 +1,4 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from routers.sql_analyst_router import sql_router
 from contextlib import asynccontextmanager
@@ -55,12 +53,3 @@ app.add_middleware(
 app.include_router(router=sql_router)
 
 
-BASE_DIR = Path(__file__).resolve().parent
-UI_DIR = BASE_DIR / "ui"
-
-app.mount("/ui", StaticFiles(directory=UI_DIR), name="ui")
-
-
-@app.get("/", include_in_schema=False)
-def serve_index():
-    return FileResponse(UI_DIR / "index.html")
