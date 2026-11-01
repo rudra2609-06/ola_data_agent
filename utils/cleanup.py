@@ -57,5 +57,3 @@ def cleanup_expired_table():
     finally:
         if conn:
             conn.close()
-        if cursor:
-            cursor.close()
