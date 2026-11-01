@@ -41,8 +41,8 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-origins = os.getenv("origins")
-origins = [o.strip() for o in origins.split(",") if o.strip()]
+origins = [os.environ.get("ORIGINS")]
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -53,3 +53,8 @@ app.add_middleware(
 )
 
 app.include_router(router=sql_router)
+
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to Ola Data Agent API"}
