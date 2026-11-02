@@ -18,13 +18,13 @@ logger = logging.getLogger(__name__)
 
 def cleanup_expired_table():
     db_obj = DatabaseUtil(
-        {
-            "host": "localhost",
-            "port": 5432,
-            "dbname": "postgres",
-            "user": "postgres",
-            "password": os.getenv("POSTGRES_PASSWORD"),
-        }
+        # {
+        #     "host": os.environ.get("POSTGRES_DB_URL"),
+        #     "port": 5432,
+        #     "dbname": "postgres",
+        #     "user": "postgres",
+        #     "password": os.environ.get("POSTGRES_PASSWORD"),
+        # }
     )
     conn = db_obj.connection
 

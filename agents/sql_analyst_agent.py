@@ -64,13 +64,13 @@ def context_prompt_query(state: AgentSchema) -> AgentSchema:
             AgentSchema: The updated schema with the context prompt.
     """
     db_obj = DatabaseUtil(
-        {
-            "host": "localhost",
-            "port": 5432,
-            "dbname": "postgres",
-            "user": "postgres",
-            "password": os.getenv("POSTGRES_PASSWORD"),
-        }
+        # {
+        #     "host": "localhost",
+        #     "port": 5432,
+        #     "dbname": "postgres",
+        #     "user": "postgres",
+        #     "password": os.getenv("POSTGRES_PASSWORD"),
+        # }
     )
     context = db_obj.collect_context()
     # Constructing the prompt query for the agent to generate the SQL query

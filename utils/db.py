@@ -7,11 +7,11 @@ from typing import Optional
 
 class DatabaseUtil:
 
-    def __init__(self, db_config):
+    def __init__(self, db_config=None):
         """Initializes the DatabaseUtil class with the provided database configuration."""
-        self.db_config = db_config
+        url = os.environ.get("POSTGRES_DB_URL")        
         try:
-            self.connection = psycopg2.connect(**db_config)
+            self.connection = psycopg2.connect(url)
         except psycopg2.Error as e:
             print(f"Error connecting to the database: {e}")
             self.connection = None

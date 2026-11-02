@@ -56,13 +56,13 @@ async def upload_csv_file(
 
     content = b"".join(chunks)
     db_obj = DatabaseUtil(
-        {
-            "host": "localhost",
-            "port": 5432,
-            "dbname": "postgres",
-            "user": "postgres",
-            "password": os.getenv("POSTGRES_PASSWORD"),
-        }
+        # {
+        #     "host": os.environ.get("POSTGRES_DB_URL"),
+        #     "port": 5432,
+        #     "dbname": "postgres",
+        #     "user": "postgres",
+        #     "password": os.getenv("POSTGRES_PASSWORD"),
+        # }
     )
     cursor = db_obj.connection.cursor()
 
