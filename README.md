@@ -2,6 +2,10 @@
 
 An agentic workflow that turns a plain-English question into a safe PostgreSQL query, runs it, and returns a short, readable answer. Built with LangGraph, PostgreSQL and an LLM-based safety guard.
 
+> **Live demo:** [oladataagent-ui.vercel.app](https://oladataagent-ui.vercel.app/)
+>
+> **Video walkthrough:** [Watch on Google Drive](https://drive.google.com/file/d/19PhlvCMoktrnfhVOJY5bUCO8ehTGAp8L/view?usp=drive_link)
+>
 > **Status:** work in progress (core flow in place, more features planned).
 
 ---
