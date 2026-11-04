@@ -9,7 +9,7 @@ from utils.cleanup import cleanup_expired_table
 
 from pathlib import Path
 
-scheduler = BackgroundScheduler()
+scheduler = BackgroundScheduler()``
 
 
 @asynccontextmanager

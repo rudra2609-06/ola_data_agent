@@ -109,10 +109,19 @@ def generate_sql_query(state: AgentSchema) -> AgentSchema:
 
         Rules:
         - Output ONLY the raw SQL query. No explanations, comments, markdown, or code fences.
-        - Generate exactly one SELECT statement (a WITH ... SELECT is fine).
+        - Generate exactly one SELECT statement (a WITH ... SELECT is fine). Do not add a trailing
+        semicolon.
         - Never generate INSERT, UPDATE, DELETE, DROP, ALTER, TRUNCATE, CREATE, GRANT, or any
         statement that changes data or structure.
+        - Do not generate queries to perform or facilitate SQL injection, bypass access controls,
+        or access the database outside the provided schema.
         - Use only tables and columns that appear in the schema. Do not guess names.
+        - Answer ordinary data-retrieval and analysis requests, including brief insights, trends,
+        comparisons, counts, and summaries. For trend requests, use relevant date/time columns and
+        aggregate by a suitable time period when available; otherwise summarize by relevant
+        categories or measures supported by the schema.
+        - Do not reject an analytical request just because it is broad or asks for "insights" or
+        "key trends". Make the most useful read-only query supported by the schema.
         - Unless the user asks for a specific number of rows, add LIMIT 10 to queries that return rows.
         - When joining tables, avoid duplicating rows (for example, counting one entity once
         per joined row). Use subqueries, DISTINCT, or pre-aggregation when needed.
@@ -157,11 +166,17 @@ def sql_check_guard(state: AgentSchema) -> AgentSchema:
 
     A query is SAFE only if ALL of these are true:
     - It is exactly one statement, and that statement is a read-only SELECT (a WITH ... SELECT is fine).
+      A single optional semicolon at the very end is only a statement terminator and is safe.
+      A semicolon followed by another statement is not safe.
     - It does not modify data or structure (no INSERT, UPDATE, DELETE, MERGE, TRUNCATE, DROP,
     ALTER, CREATE, GRANT, REVOKE, COPY, CALL, DO).
     - It does not use SELECT ... INTO, SELECT ... FOR UPDATE/SHARE, or functions with side effects
     or system access (e.g. pg_sleep, pg_read_file, lo_import, dblink, set_config).
     - It contains no stacked statements (a second statement after a semicolon).
+    - Read-only analytical operations such as aggregation, grouping, ordering, date bucketing,
+      comparisons, and window functions are safe when they meet the rules above.
+    - Do not mark a query unsafe solely because the user's request is broad or asks for trends,
+      insights, or summaries.
 
     If any condition fails, or you are unsure, the answer is "No".
 
