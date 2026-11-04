@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from routers.sql_analyst_router import sql_router
 from contextlib import asynccontextmanager
 from utils.db_connection import create_tbls
@@ -10,7 +10,6 @@ from utils.cleanup import cleanup_expired_table
 from pathlib import Path
 
 scheduler = BackgroundScheduler()
-import os
 
 
 @asynccontextmanager
@@ -41,20 +40,9 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-origins = [os.environ.get("ORIGINS")]
-
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=False,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
-)
-
 app.include_router(router=sql_router)
 
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to Ola Data Agent API"}
+    return FileResponse(Path(__file__).parent / "ui" / "index.html")
