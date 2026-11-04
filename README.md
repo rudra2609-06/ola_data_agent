@@ -171,15 +171,6 @@ The response contains the answer and generated SQL:
 
 Questions must be between 1 and 1,000 characters. An unknown upload ID returns an error. Expired upload tables are removed by the cleanup job; see the data-handling note below for the current metadata cleanup behavior. See `/docs` for the live OpenAPI specification and response details.
 
-## Deployment notes
-
-- Deploy the FastAPI application and its UI together, or configure the UI to call the deployed API. The included page sends API requests to the same origin.
-- Set `POSTGRES_DB_URL` and `GOOGLE_API_KEY` in the deployment platform's secret/environment-variable settings; do not commit real credentials.
-- Use a persistent, reachable PostgreSQL database. The application needs permissions to create and populate upload tables, create its metadata table, and drop expired upload tables.
-- Set a suitable process start command, such as `uvicorn main:app --host 0.0.0.0 --port $PORT` (adapt the port expression to your hosting platform).
-- Configure platform health checks and network access so the service can reach PostgreSQL and the Google Gemini API.
-- Replace the deployment and video URLs in [Project links](#project-links) after publishing your own deployment and walkthrough.
-
 ## Safety and data handling
 
 The agent is prompted to generate read-only SQL and uses an LLM-based guard before executing it. This is a useful safeguard, but an LLM judgment is **not** a database security boundary. Do not rely on it as the only protection, and do not upload sensitive or production data to an untrusted deployment. Restrict database credentials and access appropriately, and review the generated SQL before using results for important decisions.
@@ -193,6 +184,3 @@ Uploaded CSV data is written to PostgreSQL. Temporary upload tables are intended
 3. Run the application locally and verify both CSV upload and question answering against a test database.
 4. Open a pull request describing the change and how it was verified.
 
-## License
-
-No license file is currently included in this repository. Add a license before redistributing the project if you intend to grant reuse rights.
