@@ -5,7 +5,7 @@ Ola Data Analyst is a web application that lets you upload a CSV file, ask a que
 ## Project links
 
 - **Deployment:** https://ola-data-agent.onrender.com
-- **Video explanation:** [Watch the walkthrough](https://drive.google.com/file/d/19PhlvCMoktrnfhVOJY5bUCO8ehTGAp8L/view?usp=drive_link)
+- **Video explanation:** https://drive.google.com/file/d/16qUhyv0rjayuQgEdO75iYnNvQN_W0uU0/view?usp=sharing
 
 ## Features
 
